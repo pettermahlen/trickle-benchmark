@@ -42,7 +42,7 @@ public class DebugBenchmark {
   @Benchmark
   @BenchmarkMode(Mode.Throughput)
   public long benchmarkNoDebug(TrickleGraph graph) throws ExecutionException, InterruptedException {
-    return graph.result.bind(GraphSetup.HEARTBEAT_ENDPOINT, String.valueOf(System.currentTimeMillis())).run().get();
+    return graph.result.bind(GraphSetup.HEARTBEAT_ENDPOINT, String.valueOf(System.currentTimeMillis())).debug(false).run().get();
   }
 
   @Benchmark
