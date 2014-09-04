@@ -49,10 +49,12 @@ public class TrickleVsXBenchmark {
   @State(Scope.Thread)
   public static class TrickleGraph {
     ListeningExecutorService executor;
+    Graph<Long> result;
 
     @Setup
     public void setupExecutor() {
       executor = MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(1));
+      result = GraphSetup.graph(executor);
     }
 
     @TearDown
@@ -61,7 +63,7 @@ public class TrickleVsXBenchmark {
       executor = null;
     }
 
-    Graph<Long> result = GraphSetup.graph(executor);
+
   }
 
   @Benchmark

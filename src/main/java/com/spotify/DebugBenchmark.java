@@ -17,26 +17,29 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 
 /**
- * TODO: document!
+ * Compare the performance with and without debugging.
  */
 public class DebugBenchmark {
 
   @State(Scope.Thread)
   public static class TrickleGraph {
     ListeningExecutorService executor;
+    Graph<Long> result;
 
     @Setup
     public void setupExecutor() {
       executor = MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(1));
+      result = GraphSetup.graph(executor);
+      GraphSetup.useExecutor = true;
     }
 
     @TearDown
     public void shutdownExecutor() {
+      result = null;
       executor.shutdown();
       executor = null;
     }
 
-    Graph<Long> result = GraphSetup.graph(executor);
   }
 
   @Benchmark
